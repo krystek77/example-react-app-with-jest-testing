@@ -25,7 +25,11 @@ export const dataReducer = function (state, action) {
     case 'LIST_END_LOADING':
       return { ...state, isLoading: false };
     default:
-      throw new Error('Operation not allowed');
+      return {
+        ...state,
+        error: { message: 'Operation not allowed' },
+        isLoading: false,
+      };
   }
 };
 

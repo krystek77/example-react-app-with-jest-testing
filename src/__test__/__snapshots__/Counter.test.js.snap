@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Counter snapshot renders 1`] = `
+<p
+  className="Counter"
+>
+  1
+</p>
+`;
+
+exports[`Counter snapshot renders 2 1`] = `
+<p
+  className="Counter"
+>
+  1
+</p>
+`;
