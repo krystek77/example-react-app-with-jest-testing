@@ -1,26 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+
+const URL_API = 'http://hn.algolia.com/api/v1/search';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h1>Jest Testing in React</h1>
+      <h2>Counter</h2>
+      <h2>Fetching data from Hacker News</h2>
     </div>
   );
 }
-
 export default App;
