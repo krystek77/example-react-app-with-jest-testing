@@ -26,6 +26,8 @@ function App() {
   return (
     <div className='App'>
       <h1>Jest Testing in React</h1>
+
+      {/** Counter */}
       <h2>Counter</h2>
       <Counter counter={counter} />
       <div className='btn-group'>
@@ -47,6 +49,8 @@ function App() {
       {errorCounter && (
         <div className='error-counter'>{errorCounter.message}</div>
       )}
+
+      {/** Fetching data */}
       <h2>Fetching data from Hacker News</h2>
     </div>
   );
