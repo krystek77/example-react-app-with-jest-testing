@@ -2,14 +2,24 @@ import React from 'react';
 import Counter from './Counter';
 import axios from 'axios';
 
-const URL_API = 'http://hn.algolia.com/api/v1/searcha';
+const URL_API = 'http://hn.algolia.com/api/v1/search';
 
-function dataReducer(state, action) {
+export const dataReducer = function (state, action) {
   switch (action.type) {
     case 'SET_LIST':
-      return { ...state, list: action.data, error: null, isLoading: false };
+      return {
+        ...state,
+        list: action.data,
+        error: null,
+        isLoading: false,
+      };
     case 'SET_ERROR':
-      return { ...state, list: [], error: action.error, isLoading: false };
+      return {
+        ...state,
+        list: [],
+        error: action.error,
+        isLoading: false,
+      };
     case 'LIST_START_LOADING':
       return { ...state, isLoading: true };
     case 'LIST_END_LOADING':
@@ -17,15 +27,15 @@ function dataReducer(state, action) {
     default:
       throw new Error('Operation not allowed');
   }
-}
+};
 
-const initialData = {
+export const initialData = {
   list: [],
   error: null,
   isLoading: false,
 };
 
-function App() {
+export default function App() {
   const [counter, setCounter] = React.useState(0);
   const [errorCounter, setErrorCounter] = React.useState(null);
   const [data, dispatch] = React.useReducer(dataReducer, initialData);
@@ -128,4 +138,3 @@ function App() {
     </div>
   );
 }
-export default App;
