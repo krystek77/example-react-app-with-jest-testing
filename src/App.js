@@ -2,14 +2,18 @@ import React from 'react';
 import Counter from './Counter';
 import axios from 'axios';
 
-const URL_API = 'http://hn.algolia.com/api/v1/search';
+const URL_API = 'http://hn.algolia.com/api/v1/searcha';
 
 function dataReducer(state, action) {
   switch (action.type) {
     case 'SET_LIST':
-      return { ...state, list: action.data, error: null };
+      return { ...state, list: action.data, error: null, isLoading: false };
     case 'SET_ERROR':
-      return { ...state, list: [], error: action.error };
+      return { ...state, list: [], error: action.error, isLoading: false };
+    case 'LIST_START_LOADING':
+      return { ...state, isLoading: true };
+    case 'LIST_END_LOADING':
+      return { ...state, isLoading: false };
     default:
       throw new Error('Operation not allowed');
   }
@@ -18,6 +22,7 @@ function dataReducer(state, action) {
 const initialData = {
   list: [],
   error: null,
+  isLoading: false,
 };
 
 function App() {
@@ -47,14 +52,17 @@ function App() {
 
   React.useEffect(() => {
     let isMounted = true;
+    dispatch({ type: 'LIST_START_LOADING' });
     const loadData = async function () {
       if (isMounted) {
         try {
           const response = await axios.get(`${URL_API}?query=react`);
 
           dispatch({ type: 'SET_LIST', data: response.data.hits });
+          dispatch({ type: 'LIST_END_LOADING' });
         } catch (error) {
           dispatch({ type: 'SET_ERROR', error: error });
+          // dispatch({ type: 'LIST_END_LOADING' });
         }
       }
     };
@@ -96,23 +104,27 @@ function App() {
       {/** Fetching data */}
       <h2>Fetching data from Hacker News</h2>
       {data.error && <div className='error'>{data.error.message}</div>}
-      <ul className='list-items'>
-        {data.list.map(({ title, url, objectID }) => {
-          return (
-            <li className='list-item' key={objectID}>
-              <h3>{title}</h3>
-              <a
-                className='link'
-                href={url}
-                target='_blanc'
-                rel='noopener norefferer'
-              >
-                {url}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      {data.isLoading ? (
+        <div className='loading'>Loading...</div>
+      ) : (
+        <ul className='list-items'>
+          {data.list.map(({ title, url, objectID }) => {
+            return (
+              <li className='list-item' key={objectID}>
+                <h3>{title}</h3>
+                <a
+                  className='link'
+                  href={url}
+                  target='_blanc'
+                  rel='noopener norefferer'
+                >
+                  {url}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }
